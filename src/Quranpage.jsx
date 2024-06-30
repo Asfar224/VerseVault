@@ -11,8 +11,9 @@ export default function Quranpage(props)  {
   const [chapter, setChapter] = useState(1);
   const [clickedayat , setclickedayat] = useState(null);
   const location = useLocation();
-  const {userid} = location.state;
+  const {userid} = location.state || {};
   const user_collection = collection(firestore , "bookmarks");
+  const [user , setuser] = useState([]);
 
   const chapters = Array.from({ length: 114 }, (_, index) => index + 1);
 
@@ -20,6 +21,9 @@ export default function Quranpage(props)  {
     renderverses();
   }, [chapter])
 
+  useEffect(()=>{
+     fetchnotes();
+  },[userid])
 
 const handleayatclick = (ayat)=> {
    setclickedayat(ayat);
@@ -31,20 +35,26 @@ const handleexit =() =>{
     console.log(clickedayat);
 }
 
-const getrecords = async()=>{
+const getrecord = async()=>{
   try{
     const q = query(user_collection, where('uid', '==', userid));
     const users = await getDocs(q);
     const userData = users.docs.map(doc => doc.data());
-    console.log(userData);
+    return userData;
   }catch(error){
     console.log(error);
   }
-  
 }
+
+const fetchnotes = async()=>{
+  const userdata = await getrecord();
+  setuser(userdata);
+}
+
+
 const handlebookmark =()=>{
    if(props.loginstate === true){
-       const currentuser = getrecords();
+       const currentuser = getrecord();
    }else{
     alert('Login to Bookmark this ');
    }
@@ -76,6 +86,7 @@ const handlebookmark =()=>{
       <div className='quran-page'>
         <Navbar setloginstate={props.setloginstate}/>
         <div className="quran-page-container">
+        <div className='upper-sec'>
           <div className="chapter-selection">
             <label><strong>Select Chapter :</strong></label>
             <select value={chapter} onChange={(e) => { setChapter(parseInt(e.target.value)) }} >
@@ -86,6 +97,15 @@ const handlebookmark =()=>{
               ))}
             </select>
           </div>
+          <div className='info-card'> 
+              <label style={{paddingTop : '14px' , marginRight : '15px'}}><strong>BOOKMARK :</strong></label>
+              {user  && (
+                user.map((userData, index) => (
+                  <p key={index}>{userData.bookmark.chapterno} : {userData.bookmark.ayatno}</p>
+                ))
+              )}
+          </div>
+        </div>
           <div className="quran-card">
             <h2>Chapter {chapter} Ayahs</h2>
             <div className='amiri'>
