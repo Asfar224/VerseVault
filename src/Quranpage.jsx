@@ -52,13 +52,32 @@ const fetchnotes = async()=>{
 }
 
 
-const handlebookmark =()=>{
-   if(props.loginstate === true){
-       const currentuser = getrecord();
-   }else{
-    alert('Login to Bookmark this ');
-   }
-}
+const handlebookmark = async (ayat) => {
+  if (props.loginstate === true) {
+    try {
+      const q = query(user_collection, where('uid', '==', userid));
+      const querySnapshot = await getDocs(q);
+
+      if (!querySnapshot.empty) {
+        const docRef = querySnapshot.docs[0].ref;
+
+        await updateDoc(docRef, {
+          'bookmark.chapterno': ayat.chapter,
+          'bookmark.ayatno': ayat.verse,
+        });
+
+        alert('Bookmark updated!');
+        fetchnotes(); // Refresh bookmarks
+      } else {
+        alert('No existing bookmark found to update.');
+      }
+    } catch (error) {
+      console.error('Error updating bookmark:', error);
+    }
+  } else {
+    alert('Login to Bookmark this Ayat');
+  }
+};
 
   const renderverses = () => {
     if (qurandata.hasOwnProperty(chapter.toString())) {
@@ -70,7 +89,7 @@ const handlebookmark =()=>{
                 <div className='hover-card'>
                   <strong>Chapter:</strong> {ayat.chapter}, <strong>Verse:</strong> {ayat.verse}
                   <span className='ayat-card'>{ayat.text} ۝</span>
-                  <button type = 'button' className='ayat-bookmark-button' onClick={handlebookmark} >Bookmark this Ayat</button>
+                  <button type = 'button' className='ayat-bookmark-button' onClick={()=>{handlebookmark(ayat)}} >Bookmark this Ayat</button>
                   <button type = 'button' className='card-removal-button' onClick={handleexit} >Return</button>
                 </div>
               )}
@@ -99,11 +118,11 @@ const handlebookmark =()=>{
           </div>
           <div className='info-card'> 
               <label style={{paddingTop : '14px' , marginRight : '15px'}}><strong>BOOKMARK :</strong></label>
-              {user  && (
+               {props.loginstate ? (user  && (
                 user.map((userData, index) => (
-                  <p key={index}>{userData.bookmark.chapterno} : {userData.bookmark.ayatno}</p>
+                 <p key={index}>{userData.bookmark.chapterno} : {userData.bookmark.ayatno}</p>
                 ))
-              )}
+              )) : (<p>None </p>)}
           </div>
         </div>
           <div className="quran-card">
