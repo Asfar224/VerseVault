@@ -21,6 +21,7 @@ function Login(props) {
 }
 
   return (
+    <div className='background-container'>
     <div className='signup-card'>
     <h2>Login to your Account</h2>
     <div className='signupform'>
@@ -48,6 +49,7 @@ function Login(props) {
       <button type="button" onClick={login}>LOGIN</button>
     </div>
   </div>
+</div>
   );
 };
 

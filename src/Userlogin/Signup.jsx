@@ -30,6 +30,7 @@ function Signup(props) {
   };
 
   return (
+    <div className='background-container'>
     <div className='signup-card'>
       <h2>Create an Account</h2>
       <div className='signupform'>
@@ -57,6 +58,7 @@ function Signup(props) {
         <button type="button" onClick={register}>Signup</button>
       </div>
     </div>
+  </div>
   );
 }
 

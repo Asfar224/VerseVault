@@ -66,11 +66,12 @@
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   background-color: #fff;
-  text-align: center;
+  text-align: justify;
 }
 
 .quran-card h2 {
   padding-bottom: 12px;
+  text-align: center;
 }
 
 .amiri {
@@ -124,4 +125,40 @@
   display: inline-block;
   padding: 15px 8px;
   line-height: 50px;
+}
+
+@media (max-width: 768px) {
+  .upper-sec {
+    flex-direction: column; 
+    align-items: center;
+  }
+
+  .chapter-selection, .info-card {
+    width: 100%; 
+  }
+
+  .chapter-selection select {
+    width: 100%; 
+    max-width: 60px; 
+    margin-bottom: -34px;
+    
+    vertical-align: middle; 
+
+  }
+
+  .chapter-selection label {
+    margin-right: 10px; /* Space between label and dropdown */
+    white-space: nowrap; /* Prevent label text from wrapping */
+    vertical-align: middle; 
+  }
+
+  .chapter-selection{
+    display: flex;
+    align-items: center;
+    margin-left: -80px;
+  }
+
+  .quran-card {
+    width: 100%;
+  }
 }
