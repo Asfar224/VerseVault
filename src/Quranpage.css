@@ -10,7 +10,7 @@
   padding: 20px;
 }
 
-.upper-sec{
+.upper-sec {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -36,7 +36,7 @@
 }
 
 .info-card {
-  flex: 1; 
+  flex: 1;
   display: flex;
   flex-direction: row;
   background-color: white;
@@ -48,12 +48,12 @@
   max-width: 350px;
 }
 
-.info-card  p {
+.info-card p {
   padding-top: 14px;
   margin: 0;
 }
 
-.info-card p:hover{
+.info-card p:hover {
   cursor: pointer;
 }
 
@@ -71,9 +71,7 @@
 
 .quran-card h2 {
   padding-bottom: 12px;
-
 }
-
 
 .amiri {
   font-family: "Amiri Quran", serif;
@@ -82,38 +80,35 @@
   line-height: 45px;
 }
 
-.ayat{
+.ayat {
   text-decoration: none;
   color: black;
   font-size: 24px;
   display: inline;
-  margin: 6px 0;  
+  margin: 3px 0;
   padding: 0 6px;
   cursor: pointer;
 }
-.ayat span{
+
+.ayat span {
   display: inline-block;
   margin: 10px 0;
 }
 
 .hover-card {
-  display: none; 
+  display: block;
   position: fixed; /* Fixed positioning relative to the viewport */
   top: 50px; /* Adjust as needed */
   right: 0; /* Align to the right-most side */
-  width: 30%; 
-  max-width: 30%; 
+  width: 30%;
+  max-width: 30%;
   padding: 20px;
   background-color: white;
   border: 2px solid #ccc;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  word-wrap: break-word; /* Ensure long text wraps within the box */
+  word-wrap: break-word; 
   z-index: 1000;
-}
-
-.ayat .hover-card {
-  display: block;
 }
 
 .card-removal-button {
@@ -121,13 +116,12 @@
   margin-top: 8px;
 }
 
-.card-removal-button:hover{
-    background-color: rgb(207, 30, 30);
+.card-removal-button:hover {
+  background-color: rgb(207, 30, 30);
 }
 
 .hover-card .ayat-card {
- display: inline-block;
- padding: 15px 8px; 
- line-height: 50px;
- 
+  display: inline-block;
+  padding: 15px 8px;
+  line-height: 50px;
 }

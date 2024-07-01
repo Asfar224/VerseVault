@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
+
 import './Navbar.css';
 
 function Navbar(props) {
@@ -7,6 +8,7 @@ function Navbar(props) {
 
   const signingout = () => {
     props.setloginstate(false);
+
   }
 
   const handlelogin = () => {
@@ -29,8 +31,7 @@ function Navbar(props) {
                   to="/" 
                   style={{ color: 'white' }} 
                   activeClassName="active"
-                  exact
-                >
+                  exact>
                   Home
                 </NavLink>
               </li>
@@ -39,8 +40,7 @@ function Navbar(props) {
                   className="nav-link" 
                   to="/about" 
                   style={{ color: 'white' }} 
-                  activeClassName="active"
-                >
+                  activeClassName="active">
                   About
                 </NavLink>
               </li>

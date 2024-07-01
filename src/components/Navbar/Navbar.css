@@ -1,8 +1,8 @@
 .nav-link {
     color: white;
     text-decoration: none;
-    padding: 8px 16px; /* Add padding for better click area */
-    position: relative; /* Needed for the underline to be positioned correctly */
+    padding: 8px 16px; 
+    position: relative; 
   }
   
   .nav-link.active::after {
