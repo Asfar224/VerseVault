@@ -67,6 +67,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   background-color: #fff;
   text-align: justify;
+  text-align-last: center;
 }
 
 .quran-card h2 {
@@ -92,7 +93,7 @@
 }
 
 .ayat span {
-  display: inline-block;
+  display: inline;
   margin: 10px 0;
 }
 
