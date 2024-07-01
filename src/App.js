@@ -5,6 +5,7 @@ import Login from './Userlogin/Login';
 import Signup from './Userlogin/Signup';
 import Quranpage from './Quranpage';
 import { useEffect, useState } from 'react';
+import About from './about/About';
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
           <Route path="/" element={<Quranpage loginstate={loginstate}  setloginstate={setloginstate}/>} />
           <Route path="/login" element={<Login setloginstate={setloginstate}/>} />
           <Route path="/signup" element={<Signup setloginstate={setloginstate}/>} />
+          <Route path= "/about" element={ <About/>} />
         </Routes>
       </div>
     </Router>

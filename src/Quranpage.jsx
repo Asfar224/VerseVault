@@ -30,9 +30,8 @@ const handleayatclick = (ayat)=> {
 }
 
 
-const handleexit =() =>{
+const handleexit = () =>{
     setclickedayat(null);
-    console.log(clickedayat);
 }
 
 const getrecord = async()=>{
@@ -79,20 +78,26 @@ const handlebookmark = async (ayat) => {
   }
 };
 
+const handlebookmarclick = (chp)=>{
+     setChapter(chp);
+}
+
+
+
   const renderverses = () => {
     if (qurandata.hasOwnProperty(chapter.toString())) {
       return qurandata[chapter.toString()].map((ayat) => (
         <span className='ayat' onClick={()=>{handleayatclick(ayat)}}>
               {ayat.text}
               <span className='end-symbol'> ۝</span>
-              {clickedayat && clickedayat.verse === ayat.verse && (
-                <div className='hover-card'>
-                  <strong>Chapter:</strong> {ayat.chapter}, <strong>Verse:</strong> {ayat.verse}
-                  <span className='ayat-card'>{ayat.text} ۝</span>
-                  <button type = 'button' className='ayat-bookmark-button' onClick={()=>{handlebookmark(ayat)}} >Bookmark this Ayat</button>
-                  <button type = 'button' className='card-removal-button' onClick={handleexit} >Return</button>
-                </div>
-              )}
+              {clickedayat && clickedayat.verse === ayat.verse ? (
+            <div className='hover-card'>
+              <strong>Chapter:</strong> {ayat.chapter}, <strong>Verse:</strong> {ayat.verse}
+              <span className='ayat-card'>{ayat.text} ۝</span>
+              <button type='button' className='ayat-bookmark-button' onClick={() => { handlebookmark(ayat) }}>Bookmark this Ayat</button>
+              <button type='button' className='card-removal-button' onClick={handleexit}>Return</button>
+            </div>
+          ): null}
             </span>
       ))
     }
@@ -117,10 +122,10 @@ const handlebookmark = async (ayat) => {
             </select>
           </div>
           <div className='info-card'> 
-              <label style={{paddingTop : '14px' , marginRight : '15px'}}><strong>BOOKMARK :</strong></label>
+              <label style={{paddingTop : '14px' , marginRight : '15px' , marginLeft : '15px'}}><strong>BOOKMARK :</strong></label>
                {props.loginstate ? (user  && (
                 user.map((userData, index) => (
-                 <p key={index}>{userData.bookmark.chapterno} : {userData.bookmark.ayatno}</p>
+                 <p key={index} onClick={()=>{handlebookmarclick(userData.bookmark.chapterno)}}>{userData.bookmark.chapterno} : {userData.bookmark.ayatno}</p>
                 ))
               )) : (<p>None </p>)}
           </div>
