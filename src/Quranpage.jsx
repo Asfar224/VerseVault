@@ -13,6 +13,7 @@ export default function Quranpage(props) {
   const { userid } = location.state || {};
   const user_collection = collection(firestore, 'bookmarks');
   const [user, setUser] = useState([]);
+  const[loading , setloading] = useState(false);
   const ayatRefs = useRef({});
 
   const chapters = Array.from({ length: 114 }, (_, index) => index + 1);
@@ -52,7 +53,7 @@ export default function Quranpage(props) {
   };
 
   const handleBookmark = async (ayat) => {
-    console.log("bookmark called")
+    setloading(true);
     if (props.loginstate === true) {
       try {
         const q = query(user_collection, where('uid', '==', userid));
@@ -73,6 +74,9 @@ export default function Quranpage(props) {
         }
       } catch (error) {
         console.error('Error updating bookmark:', error);
+      }
+      finally{
+        setloading(false);
       }
     } else {
       alert('Login to Bookmark this Ayat');
@@ -111,7 +115,8 @@ export default function Quranpage(props) {
             <div className='hover-card'>
               <strong>Chapter:</strong> {ayat.chapter}, <strong>Verse:</strong> {ayat.verse}
               <span className='ayat-card'>{ayat.text} ۝</span>
-              <button type='button' className='ayat-bookmark-button' onClick={() => { handleBookmark(ayat) }}>Bookmark this Ayat</button>
+              {loading ? <button type='button' className='ayat-bookmark-button' ><l-line-spinner size="24" stroke="2" speed="1" color="white"></l-line-spinner></button>:
+              <button type='button' className='ayat-bookmark-button' onClick={() => { handleBookmark(ayat) }}>Bookmark this Ayat</button>}
               <button type='button' className='card-removal-button' onClick={handleExit}>Return</button>
             </div>
           ) : null}

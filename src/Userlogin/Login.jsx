@@ -6,10 +6,12 @@ function Login(props) {
 
  const [loginemail , setloginemail] = useState('');
  const [loginpassword , setloginpassword] = useState('');
+ const [loading , setloading] = useState(false);
  const navigate = useNavigate(); 
 
  
  const login =async () => {
+  setloading(true);
   try{
       const user = await signInWithEmailAndPassword(auth , loginemail , loginpassword);
       props.setloginstate(true);
@@ -17,6 +19,8 @@ function Login(props) {
       navigate('/' , {state : {userid : uid}});
    }catch(error){
        alert(error);
+   }finally{
+    setloading(false);
    }
 }
 
@@ -46,7 +50,8 @@ function Login(props) {
       <div className='form-group'>
         <a href='/signup'>Did'nt have an account?</a>
       </div>
-      <button type="button" onClick={login}>LOGIN</button>
+      {loading ? (<button type="button"><l-line-spinner size="24" stroke="2" speed="1" color="white"></l-line-spinner></button>) :
+      <button type="button" onClick={login}>LOGIN</button>}
     </div>
   </div>
 </div>

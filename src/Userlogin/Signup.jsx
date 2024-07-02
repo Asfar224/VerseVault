@@ -9,6 +9,7 @@ function Signup(props) {
   const [signupEmail, setSignupEmail] = useState('');
   const [signupPassword, setSignupPassword] = useState('');
   const navigate = useNavigate();
+  const [loading , setloading] = useState(false);
   const user_collection = collection(firestore , "bookmarks");
 
   const addUserBookmark =async(uid)=>{
@@ -18,6 +19,7 @@ function Signup(props) {
 
 
   const register = async () => {
+    setloading(true);
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, signupEmail, signupPassword);
       props.setloginstate(true);
@@ -26,6 +28,8 @@ function Signup(props) {
       navigate('/' , {state : {userid : uid}});
     } catch (error) {
       console.error('Error creating user:', error.message);
+    }finally{
+      setloading(false);
     }
   };
 
@@ -55,7 +59,8 @@ function Signup(props) {
         <div className='form-group'>
           <a href='/login'>Already have an account?</a>
         </div>
-        <button type="button" onClick={register}>Signup</button>
+        {loading ? (<button type="button" ><l-line-spinner size="24" stroke="2" speed="1" color="white"></l-line-spinner></button>) :
+          <button type="button" onClick={register}>LOGIN</button>}
       </div>
     </div>
   </div>
