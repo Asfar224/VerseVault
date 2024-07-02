@@ -15,7 +15,7 @@ function App() {
   const [user, setUser] = useState(null);
 
   useEffect(()=>{
-      const unsubscribe = onAuthStateChanged(auth , (currentUser)=>{
+    onAuthStateChanged(auth , (currentUser)=>{
         if(currentUser){
          setloginstate(true);
          setUser(currentUser);
@@ -25,12 +25,9 @@ function App() {
           setUser(null);
         }
   }) 
-
-  return () => unsubscribe();
-  
 },[]) 
 
-  // if(user===undefined)return "loading..."
+  if(user===undefined)return "loading..."
 
   return (
     <Router>

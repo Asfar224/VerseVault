@@ -55,6 +55,7 @@
 
 .info-card p:hover {
   cursor: pointer;
+  text-decoration: underline;
 }
 
 .quran-card {
@@ -79,7 +80,7 @@
   font-family: "Amiri Quran", serif;
   font-weight: 400;
   font-style: normal;
-  line-height: 45px;
+  line-height: 55px;
 }
 
 .ayat {
@@ -137,6 +138,11 @@
   font-size: 24px;
 }
 
+.highlighted {
+  background-color: rgb(0, 255, 251); 
+  transition: background-color 0.5s ease;
+}
+
 
 @media (max-width: 768px) {
   .upper-sec {
@@ -152,7 +158,6 @@
     width: 100%; 
     max-width: 60px; 
     margin-bottom: -34px;
-    
     vertical-align: middle; 
 
   }

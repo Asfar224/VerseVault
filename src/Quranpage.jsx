@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Navbar from './components/Navbar/Navbar';
 import './Quranpage.css';
 import qurandata from './assets/quran-chapters.json';
@@ -13,6 +13,7 @@ export default function Quranpage(props) {
   const { userid } = location.state || {};
   const user_collection = collection(firestore, 'bookmarks');
   const [user, setUser] = useState([]);
+  const ayatRefs = useRef({});
 
   const chapters = Array.from({ length: 114 }, (_, index) => index + 1);
 
@@ -78,15 +79,31 @@ export default function Quranpage(props) {
     }
   };
 
-  const handleBookmarkClick = (chp) => {
+  const handleBookmarkClick = (chp ,ayatno) => {
     setChapter(chp);
+    setTimeout(() => {
+      if (ayatRefs.current[chp] && ayatRefs.current[chp][ayatno]) {
+         const element = ayatRefs.current[chp][ayatno];
+        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        element.classList.add('highlighted');
+
+        setTimeout(() => {
+          element.classList.remove('highlighted');
+        }, 2000);
+      }
+    }, 500); 
   };
 
   const renderverses = () => {
     if (qurandata.hasOwnProperty(chapter.toString())) {
       return qurandata[chapter.toString()].map((ayat) => (
         <>
-          <span className='ayat' key={ayat.verse} onClick={() => { handleAyatClick(ayat) }}>
+          <span className='ayat' key={ayat.verse} onClick={() => { handleAyatClick(ayat) }} ref={el => {
+          if (!ayatRefs.current[ayat.chapter]) {
+            ayatRefs.current[ayat.chapter] = {};
+          }
+          ayatRefs.current[ayat.chapter][ayat.verse] = el;
+        }}>
             {ayat.text}
             <span className='end-symbol'> ۝</span>
           </span>
@@ -124,7 +141,7 @@ export default function Quranpage(props) {
               <label style={{ paddingTop: '14px', marginRight: '15px', marginLeft: '15px' }}><strong>BOOKMARK :</strong></label>
               {props.loginstate ? (user && (
                 user.map((userData, index) => (
-                  <p key={index} onClick={() => { handleBookmarkClick(userData.bookmark.chapterno) }}>{userData.bookmark.chapterno} : {userData.bookmark.ayatno}</p>
+                  <p key={index} onClick={() => { handleBookmarkClick(userData.bookmark.chapterno , userData.bookmark.ayatno) }}>{userData.bookmark.chapterno} : {userData.bookmark.ayatno}</p>
                 ))
               )) : (<p>None </p>)}
             </div>
