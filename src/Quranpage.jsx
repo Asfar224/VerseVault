@@ -25,12 +25,13 @@ export default function Quranpage(props) {
   }, [userid]);
 
   const handleAyatClick = (ayat) => {
+    console.log("ayat click called")
     setClickedayat(ayat);
   };
 
   const handleExit = () => {
-    setClickedayat(null);
-    console.log(clickedayat);
+    console.log("exit called")
+    setClickedayat("-");
   };
 
   const getRecord = async () => {
@@ -50,6 +51,7 @@ export default function Quranpage(props) {
   };
 
   const handleBookmark = async (ayat) => {
+    console.log("bookmark called")
     if (props.loginstate === true) {
       try {
         const q = query(user_collection, where('uid', '==', userid));
@@ -64,7 +66,7 @@ export default function Quranpage(props) {
           });
           setClickedayat(null);
           alert('Bookmark updated!');
-          fetchNotes(); 
+          fetchNotes();
         } else {
           alert('No existing bookmark found to update.');
         }
@@ -83,10 +85,12 @@ export default function Quranpage(props) {
   const renderverses = () => {
     if (qurandata.hasOwnProperty(chapter.toString())) {
       return qurandata[chapter.toString()].map((ayat) => (
-        <span className='ayat' key={ayat.verse} onClick={() => { handleAyatClick(ayat) }}>
-          {ayat.text}
-          <span className='end-symbol'> ۝</span>
-          {clickedayat  && clickedayat.verse === ayat.verse ? (
+        <>
+          <span className='ayat' key={ayat.verse} onClick={() => { handleAyatClick(ayat) }}>
+            {ayat.text}
+            <span className='end-symbol'> ۝</span>
+          </span>
+          {clickedayat && clickedayat.verse === ayat.verse ? (
             <div className='hover-card'>
               <strong>Chapter:</strong> {ayat.chapter}, <strong>Verse:</strong> {ayat.verse}
               <span className='ayat-card'>{ayat.text} ۝</span>
@@ -94,7 +98,7 @@ export default function Quranpage(props) {
               <button type='button' className='card-removal-button' onClick={handleExit}>Return</button>
             </div>
           ) : null}
-        </span>
+        </>
       ));
     }
     return "Chapter not found";
@@ -103,7 +107,7 @@ export default function Quranpage(props) {
   return (
     <div>
       <div className='quran-page'>
-        <Navbar setloginstate={props.setloginstate} />
+        <Navbar setloginstate={props.setloginstate} loginstate={props.loginstate}/>
         <div className="quran-page-container">
           <div className='upper-sec'>
             <div className="chapter-selection">

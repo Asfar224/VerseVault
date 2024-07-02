@@ -6,14 +6,31 @@ import Signup from './Userlogin/Signup';
 import Quranpage from './Quranpage';
 import { useEffect, useState } from 'react';
 import About from './about/About';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from './firebase-config';
 
 function App() {
 
   const [loginstate , setloginstate] = useState(false);
+  const [user, setUser] = useState(null);
 
   useEffect(()=>{
-     console.log(loginstate);   
-  },[loginstate])
+      const unsubscribe = onAuthStateChanged(auth , (currentUser)=>{
+        if(currentUser){
+         setloginstate(true);
+         setUser(currentUser);
+        }
+        else{
+          setloginstate(false);
+          setUser(null);
+        }
+  }) 
+
+  return () => unsubscribe();
+  
+},[]) 
+
+  // if(user===undefined)return "loading..."
 
   return (
     <Router>

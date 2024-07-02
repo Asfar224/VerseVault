@@ -32,6 +32,10 @@ function Navbar(props) {
     closeNavbar();
   };
 
+  const handlelogout = ()=>{
+     navigate('/signup');
+     closeNavbar();
+}
   return (
     <>
       <nav style={{ height: '47px', backgroundColor: 'black' }} className="navbar navbar-expand-lg">
@@ -76,8 +80,10 @@ function Navbar(props) {
               </li>
             </ul>
             <form className="d-flex ms-auto" role="search">
-              <button className="btn btn-outline-success me-2" type="button" onClick={signingout}>SIGNOUT</button>
-              <button className="btn btn-outline-success" type="button" onClick={handlelogin}>LOGIN</button>
+              {props.loginstate ? <button className="btn btn-outline-success me-2" type="button" onClick={signingout}>SIGNOUT</button> :
+              <><button className="btn btn-outline-success me-2" type="button" onClick={handlelogout}>SIGNIN</button>
+              <button className="btn btn-outline-success" type="button" onClick={handlelogin}>LOGIN</button></>
+              }
             </form>
           </div>
         </div>
